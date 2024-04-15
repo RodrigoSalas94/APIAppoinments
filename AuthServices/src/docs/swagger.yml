@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Documentación de la API de Autenticación
+  description: Documentación de los endpoints relacionados con la autenticación de usuarios.
+  version: 1.0.0
+tags:
+  - name: users
+    description: Endpoints relacionados con la gestión de usuarios
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /register:
+    post:
+      summary: Registro de usuarios
+      description: Registra un nuevo usuario en el sistema.
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Correo electrónico del usuario.
+                password:
+                  type: string
+                  description: Contraseña del usuario.
+      responses:
+        '201':
+          description: Usuario registrado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                  token:
+                    type: string
+                    description: Token de autenticación generado para el usuario.
+        '400':
+          description: Error en la solicitud.
+        '500':
+          description: Error interno del servidor.
+
+  /login:
+    post:
+      summary: Inicio de sesión
+      description: Inicia sesión con las credenciales de un usuario registrado.
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Correo electrónico del usuario.
+                password:
+                  type: string
+                  description: Contraseña del usuario.
+      responses:
+        '200':
+          description: Inicio de sesión exitoso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                  token:
+                    type: string
+                    description: Token de autenticación generado para el usuario.
+        '401':
+          description: Credenciales inválidas.
+        '500':
+          description: Error interno del servidor.
+
+  /users:
+    get:
+      summary: Obtener información del usuario actual
+      description: Obtiene información del usuario autenticado actualmente.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Información del usuario obtenida exitosamente.
+        '401':
+          description: No autorizado. El usuario debe iniciar sesión.
+        '500':
+          description: Error interno del servidor.
+
+  /users/getall:
+    get:
+      summary: Obtener todos los usuarios
+      description: Obtiene una lista de todos los usuarios registrados en el sistema.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de usuarios obtenida exitosamente.
+        '401':
+          description: No autorizado. El usuario debe iniciar sesión.
+        '500':
+          description: Error interno del servidor.
+
+  /users/update:
+    put:
+      summary: Actualizar información del usuario
+      description: Actualiza la información del usuario autenticado.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Nuevo correo electrónico del usuario (opcional).
+                password:
+                  type: string
+                  description: Nueva contraseña del usuario (opcional).
+      responses:
+        '200':
+          description: Información del usuario actualizada exitosamente.
+        '401':
+          description: No autorizado. El usuario debe iniciar sesión.
+        '500':
+          description: Error interno del servidor.
+
+  /users/desactivate:
+    put:
+      summary: Desactivar cuenta de usuario
+      description: Desactiva la cuenta del usuario autenticado.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cuenta de usuario desactivada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          description: No autorizado. El usuario debe iniciar sesión.
+        '500':
+          description: Error interno del servidor.
+
+  /users/reactivate:
+    put:
+      summary: Reactivar cuenta de usuario
+      description: Reactiva la cuenta del usuario autenticado.
+      tags:
+        - users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Cuenta de usuario reactivada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          description: No autorizado. El usuario debe iniciar sesión.
+        '500':
+          description: Error interno del servidor.

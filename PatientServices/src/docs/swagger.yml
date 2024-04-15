@@ -1,0 +1,170 @@
+swagger: '2.0'
+info:
+  title: Gestión de Citas Médicas
+  description: API para la gestión de pacientes en el sistema de citas médicas.
+  version: 1.0.0
+basePath: /api
+tags:
+  - name: Patients
+    description: Operaciones relacionadas con los pacientes
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /patients:
+    post:
+      tags:
+        - Patients
+      summary: Crear un nuevo paciente
+      description: Crea un nuevo paciente en el sistema.
+      parameters:
+        - in: body
+          name: body
+          description: Datos del paciente a crear
+          required: true
+          schema:
+            $ref: '#/definitions/PatientInput'
+      responses:
+        201:
+          description: Paciente creado correctamente
+        400:
+          description: Datos de paciente inválidos
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    get:
+      tags:
+        - Patients
+      summary: Obtener todos los pacientes
+      description: Obtiene una lista de todos los pacientes en el sistema.
+      responses:
+        200:
+          description: Lista de pacientes obtenida correctamente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Patient'
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+  /patients/{id}:
+    get:
+      tags:
+        - Patients
+      summary: Obtener información de un paciente por ID
+      description: Obtiene la información detallada de un paciente por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID del paciente a consultar
+          required: true
+          type: string
+      responses:
+        200:
+          description: Información del paciente obtenida correctamente
+          schema:
+            $ref: '#/definitions/Patient'
+        404:
+          description: Paciente no encontrado
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    put:
+      tags:
+        - Patients
+      summary: Actualizar información de un paciente por ID
+      description: Actualiza la información de un paciente existente por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID del paciente a actualizar
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Datos actualizados del paciente
+          required: true
+          schema:
+            $ref: '#/definitions/PatientInput'
+      responses:
+        200:
+          description: Paciente actualizado correctamente
+        404:
+          description: Paciente no encontrado
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    delete:
+      tags:
+        - Patients
+      summary: Eliminar un paciente por ID
+      description: Elimina un paciente existente por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID del paciente a eliminar
+          required: true
+          type: string
+      responses:
+        200:
+          description: Paciente eliminado correctamente
+        404:
+          description: Paciente no encontrado
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+definitions:
+  Patient:
+    type: object
+    properties:
+      id:
+        type: string
+        example: '60f9a6a58610200015d96106'
+      firstName:
+        type: string
+        example: 'John'
+      lastName:
+        type: string
+        example: 'Doe'
+      dateOfBirth:
+        type: string
+        format: date
+        example: '1990-01-01'
+      address:
+        type: object
+        properties:
+          street:
+            type: string
+            example: '123 Main St'
+          city:
+            type: string
+            example: 'New York'
+          postalCode:
+            type: string
+            example: '10001'
+      phoneNumber:
+        type: string
+        example: '123-456-7890'
+      email:
+        type: string
+        format: email
+        example: 'john.doe@example.com'
+  PatientInput:
+    type: object

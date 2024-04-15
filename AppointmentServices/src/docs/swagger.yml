@@ -1,0 +1,158 @@
+swagger: '2.0'
+info:
+  title: Gestión de Citas Médicas
+  description: API para la gestión de citas médicas en el sistema.
+  version: 1.0.0
+basePath: /api
+tags:
+  - name: Appointments
+    description: Operaciones relacionadas con las citas médicas
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /appointments:
+    post:
+      tags:
+        - Appointments
+      summary: Crear una nueva cita médica
+      description: Crea una nueva cita médica en el sistema.
+      parameters:
+        - in: body
+          name: body
+          description: Datos de la cita médica a crear
+          required: true
+          schema:
+            $ref: '#/definitions/AppointmentInput'
+      responses:
+        201:
+          description: Cita médica creada correctamente
+        400:
+          description: Datos de cita médica inválidos
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    get:
+      tags:
+        - Appointments
+      summary: Obtener todas las citas médicas
+      description: Obtiene una lista de todas las citas médicas en el sistema.
+      responses:
+        200:
+          description: Lista de citas médicas obtenida correctamente
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Appointment'
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+  /appointments/{id}:
+    get:
+      tags:
+        - Appointments
+      summary: Obtener información de una cita médica por ID
+      description: Obtiene la información detallada de una cita médica por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID de la cita médica a consultar
+          required: true
+          type: string
+      responses:
+        200:
+          description: Información de la cita médica obtenida correctamente
+          schema:
+            $ref: '#/definitions/Appointment'
+        404:
+          description: Cita médica no encontrada
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    put:
+      tags:
+        - Appointments
+      summary: Actualizar información de una cita médica por ID
+      description: Actualiza la información de una cita médica existente por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID de la cita médica a actualizar
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Datos actualizados de la cita médica
+          required: true
+          schema:
+            $ref: '#/definitions/AppointmentInput'
+      responses:
+        200:
+          description: Cita médica actualizada correctamente
+        404:
+          description: Cita médica no encontrada
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+    delete:
+      tags:
+        - Appointments
+      summary: Eliminar una cita médica por ID
+      description: Elimina una cita médica existente por su ID.
+      parameters:
+        - in: path
+          name: id
+          description: ID de la cita médica a eliminar
+          required: true
+          type: string
+      responses:
+        200:
+          description: Cita médica eliminada correctamente
+        404:
+          description: Cita médica no encontrada
+        401:
+          description: No se proporcionó un token de autenticación
+        403:
+          description: Token de autenticación inválido
+        500:
+          description: Error interno del servidor
+definitions:
+  Appointment:
+    type: object
+    properties:
+      id:
+        type: string
+      patientId:
+        type: string
+      specialistId:
+        type: string
+      date:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum: ['pending', 'confirmed', 'cancelled']
+  AppointmentInput:
+    type: object
+    properties:
+      patientId:
+        type: string
+      specialistId:
+        type: string
+      date:
+        type: string
+        format: date-time
