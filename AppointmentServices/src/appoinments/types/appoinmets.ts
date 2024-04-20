@@ -1,5 +1,5 @@
 export type Appointment = {
-  patientId: string;
+  patientId: number;
   specialistId: string;
   date: Date;
   status: 'pending' | 'confirmed' | 'cancelled';

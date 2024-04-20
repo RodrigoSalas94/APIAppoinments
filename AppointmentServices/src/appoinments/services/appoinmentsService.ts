@@ -3,7 +3,6 @@ import { AppointmentRepository } from '../repositories/appoinmentRepository';
 const appoinmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
-  // Método para crear una nueva cita médica
   async createAppointment(appointmentData: Appointment): Promise<Appointment> {
     try {
       return await appoinmentRepository.create(appointmentData);
@@ -13,7 +12,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para obtener todas las citas médicas
   async getAllAppointments(): Promise<Appointment[]> {
     try {
       return await appoinmentRepository.findAll();
@@ -23,7 +21,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para buscar una cita médica por su ID
   async getAppointmentById(appointmentId: string): Promise<Appointment | null> {
     try {
       return await appoinmentRepository.findById(appointmentId);
@@ -33,7 +30,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para actualizar una cita médica por su ID
   async updateAppointmentById(appointmentId: string, appointmentData: Appointment): Promise<Appointment | null> {
     try {
       return await appoinmentRepository.updateById(appointmentId, appointmentData);
@@ -43,7 +39,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para buscar todas las citas médicas de un paciente
   async getAppointmentsByPatientId(patientId: string): Promise<Appointment[]> {
     try {
       return await appoinmentRepository.findByPatientId(patientId);
@@ -53,7 +48,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para buscar todas las citas médicas de un especialista
   async getAppointmentsBySpecialistId(specialistId: string): Promise<Appointment[]> {
     try {
       return await appoinmentRepository.findBySpecialistId(specialistId);
@@ -63,7 +57,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para buscar todas las citas médicas dentro de un rango de fechas
   async getAppointmentsByDateRange(startDate: Date, endDate: Date): Promise<Appointment[]> {
     try {
       return await appoinmentRepository.findByDateRange(startDate, endDate);
@@ -73,7 +66,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para cancelar una cita médica por su ID
   async cancelAppointmentById(appointmentId: string): Promise<Appointment | null> {
     try {
       return await appoinmentRepository.cancelById(appointmentId);
@@ -83,7 +75,6 @@ export class AppointmentService {
     }
   }
 
-  // Método para confirmar una cita médica por su ID
   async confirmAppointmentById(appointmentId: string): Promise<Appointment | null> {
     try {
       return await appoinmentRepository.confirmById(appointmentId);

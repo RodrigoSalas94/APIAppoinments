@@ -14,7 +14,7 @@ export class PatientService {
     }
   }
 
-  async findPatientById(patientId: string): Promise<(Patient & Document) | null> {
+  async findPatientById(patientId: number): Promise<(Patient & Document) | null> {
     try {
       return await patientRepository.findPatientById(patientId);
     } catch (error) {

@@ -1,5 +1,4 @@
 using MongoDB.Driver;
-using MongoDB.Bson;
 
 
 public class SpecialistRepository
@@ -29,8 +28,7 @@ public class SpecialistRepository
     {
         try
         {
-            var objectId = ObjectId.Parse(specialistId);
-            return await _specialistsCollection.Find(s => s.Id == objectId).FirstOrDefaultAsync();
+            return await _specialistsCollection.Find(s => s.Id == specialistId).FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -52,36 +50,35 @@ public class SpecialistRepository
         }
     }
 
-   public async Task<Specialist> UpdateSpecialist(string specialistId, Specialist updates)
-{
-    try
+    public async Task<Specialist> UpdateSpecialist(string specialistId, Specialist updates)
     {
-        var filter = Builders<Specialist>.Filter.Eq(s => s.Id, ObjectId.Parse(specialistId));
-        var update = Builders<Specialist>.Update
-            .Set(s => s.FirstName, updates.FirstName)
-            .Set(s => s.LastName, updates.LastName)
-            .Set(s => s.RegistrationNumber, updates.RegistrationNumber)
-            .Set(s => s.Address, updates.Address)
-            .Set(s => s.PhoneNumber, updates.PhoneNumber)
-            .Set(s => s.Email, updates.Email);
-        
-        var options = new FindOneAndUpdateOptions<Specialist> { ReturnDocument = ReturnDocument.After };
-        
-        return await _specialistsCollection.FindOneAndUpdateAsync(filter, update, options);
+        try
+        {
+            var filter = Builders<Specialist>.Filter.Eq(s => s.Id, specialistId);
+            var update = Builders<Specialist>.Update
+                .Set(s => s.FirstName, updates.FirstName)
+                .Set(s => s.LastName, updates.LastName)
+                .Set(s => s.RegistrationNumber, updates.RegistrationNumber)
+                .Set(s => s.Address, updates.Address)
+                .Set(s => s.PhoneNumber, updates.PhoneNumber)
+                .Set(s => s.Email, updates.Email);
+
+            var options = new FindOneAndUpdateOptions<Specialist> { ReturnDocument = ReturnDocument.After };
+
+            return await _specialistsCollection.FindOneAndUpdateAsync(filter, update, options);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error updating specialist: " + ex.Message);
+            throw;
+        }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Error updating specialist: " + ex.Message);
-        throw;
-    }
-}
 
     public async Task<Specialist> DeleteSpecialist(string specialistId)
     {
         try
         {
-            var objectId = ObjectId.Parse(specialistId);
-            return await _specialistsCollection.FindOneAndDeleteAsync(s => s.Id == objectId);
+            return await _specialistsCollection.FindOneAndDeleteAsync(s => s.Id == specialistId);
         }
         catch (Exception ex)
         {
@@ -90,3 +87,4 @@ public class SpecialistRepository
         }
     }
 }
+

@@ -4,11 +4,6 @@ import { mongoUrl } from '../../connections/database';
 mongoose.connect(mongoUrl);
 
 const patientSchema: Schema<Patient & Document> = new Schema({
-  patientId: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   firstName: {
     type: String,
     required: true,

@@ -25,7 +25,7 @@ export class PatientController {
   async getPatientById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const patientId = req.params.id;
-      const patient = await patientService.findPatientById(patientId);
+      const patient = await patientService.findPatientById(+patientId);
       res.json(patient);
     } catch (error) {
       console.error('Error finding patient by ID:', error);

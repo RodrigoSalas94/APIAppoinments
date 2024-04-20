@@ -22,7 +22,7 @@ public class AuthenticationMiddleware
 
         
         string authorizationHeaderValue = context.Request.Headers["Authorization"];
-        string token = string.IsNullOrEmpty(authorizationHeaderValue) ? null : authorizationHeaderValue.ToString().Split(' ').Length > 1 ? authorizationHeaderValue.ToString().Split(' ')[1] : null;
+        string? token = string.IsNullOrEmpty(authorizationHeaderValue) ? null : authorizationHeaderValue.ToString().Split(' ').Length > 1 ? authorizationHeaderValue.ToString().Split(' ')[1] : null;
 
         if (string.IsNullOrEmpty(token))
         {

@@ -1,158 +1,174 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-  title: Gestión de Citas Médicas
-  description: API para la gestión de citas médicas en el sistema.
+  title: Documentación de la API de Citas Médicas
+  description: Documentación de los endpoints relacionados con la gestión de citas médicas.
   version: 1.0.0
-basePath: /api
 tags:
-  - name: Appointments
-    description: Operaciones relacionadas con las citas médicas
-securityDefinitions:
-  BearerAuth:
-    type: apiKey
-    name: Authorization
-    in: header
+  - name: appointments
+    description: Endpoints relacionados con la gestión de citas médicas
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
 paths:
   /appointments:
     post:
+      summary: Crear cita médica
+      description: Crea una nueva cita médica.
       tags:
-        - Appointments
-      summary: Crear una nueva cita médica
-      description: Crea una nueva cita médica en el sistema.
-      parameters:
-        - in: body
-          name: body
-          description: Datos de la cita médica a crear
-          required: true
-          schema:
-            $ref: '#/definitions/AppointmentInput'
+        - appointments
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                patientId:
+                  type: integer
+                  description: ID del paciente asociado a la cita médica.
+                specialistId:
+                  type: integer
+                  description: ID del especialista asociado a la cita médica.
+                
+
       responses:
-        201:
-          description: Cita médica creada correctamente
-        400:
-          description: Datos de cita médica inválidos
-        401:
-          description: No se proporcionó un token de autenticación
-        403:
-          description: Token de autenticación inválido
-        500:
-          description: Error interno del servidor
+        '201':
+          description: Cita médica creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  // Define las propiedades de la cita médica aquí.
+
     get:
-      tags:
-        - Appointments
       summary: Obtener todas las citas médicas
-      description: Obtiene una lista de todas las citas médicas en el sistema.
+      description: Obtiene una lista de todas las citas médicas registradas.
+      tags:
+        - appointments
+      security:
+        - bearerAuth: []
       responses:
-        200:
-          description: Lista de citas médicas obtenida correctamente
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Appointment'
-        401:
-          description: No se proporcionó un token de autenticación
-        403:
-          description: Token de autenticación inválido
-        500:
-          description: Error interno del servidor
+        '200':
+          description: Lista de citas médicas obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    // Define las propiedades de la cita médica aquí.
+
   /appointments/{id}:
     get:
+      summary: Obtener cita médica por ID
+      description: Obtiene la información de una cita médica por su ID.
       tags:
-        - Appointments
-      summary: Obtener información de una cita médica por ID
-      description: Obtiene la información detallada de una cita médica por su ID.
+        - appointments
+      security:
+        - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          description: ID de la cita médica a consultar
+        - name: id
+          in: path
+          description: ID de la cita médica a obtener.
           required: true
-          type: string
-      responses:
-        200:
-          description: Información de la cita médica obtenida correctamente
           schema:
-            $ref: '#/definitions/Appointment'
-        404:
-          description: Cita médica no encontrada
-        401:
-          description: No se proporcionó un token de autenticación
-        403:
-          description: Token de autenticación inválido
-        500:
-          description: Error interno del servidor
+            type: string
+      responses:
+        '200':
+          description: Información de la cita médica obtenida exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  // Define las propiedades de la cita médica aquí.
+
     put:
-      tags:
-        - Appointments
-      summary: Actualizar información de una cita médica por ID
+      summary: Actualizar cita médica por ID
       description: Actualiza la información de una cita médica existente por su ID.
+      tags:
+        - appointments
+      security:
+        - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          description: ID de la cita médica a actualizar
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Datos actualizados de la cita médica
+        - name: id
+          in: path
+          description: ID de la cita médica a actualizar.
           required: true
           schema:
-            $ref: '#/definitions/AppointmentInput'
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                // Define las propiedades de la cita médica aquí.
+
       responses:
-        200:
-          description: Cita médica actualizada correctamente
-        404:
-          description: Cita médica no encontrada
-        401:
-          description: No se proporcionó un token de autenticación
-        403:
-          description: Token de autenticación inválido
-        500:
-          description: Error interno del servidor
+        '200':
+          description: Información de la cita médica actualizada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  // Define las propiedades de la cita médica aquí.
+
     delete:
+      summary: Cancelar cita médica por ID
+      description: Cancela una cita médica existente por su ID.
       tags:
-        - Appointments
-      summary: Eliminar una cita médica por ID
-      description: Elimina una cita médica existente por su ID.
+        - appointments
+      security:
+        - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          description: ID de la cita médica a eliminar
+        - name: id
+          in: path
+          description: ID de la cita médica a cancelar.
           required: true
-          type: string
+          schema:
+            type: string
       responses:
-        200:
-          description: Cita médica eliminada correctamente
-        404:
-          description: Cita médica no encontrada
-        401:
-          description: No se proporcionó un token de autenticación
-        403:
-          description: Token de autenticación inválido
-        500:
-          description: Error interno del servidor
-definitions:
-  Appointment:
-    type: object
-    properties:
-      id:
-        type: string
-      patientId:
-        type: string
-      specialistId:
-        type: string
-      date:
-        type: string
-        format: date-time
-      status:
-        type: string
-        enum: ['pending', 'confirmed', 'cancelled']
-  AppointmentInput:
-    type: object
-    properties:
-      patientId:
-        type: string
-      specialistId:
-        type: string
-      date:
-        type: string
-        format: date-time
+        '200':
+          description: Cita médica cancelada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    put:
+      summary: Confirmar cita médica por ID
+      description: Confirma una cita médica existente por su ID.
+      tags:
+        - appointments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: ID de la cita médica a confirmar.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cita médica confirmada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  // Define las propiedades de la cita médica aquí.

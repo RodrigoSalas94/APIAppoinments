@@ -12,9 +12,9 @@ export class PatientRepository {
     }
   }
 
-  async findPatientById(patientId: string): Promise<(Patient & Document) | null> {
+  async findPatientById(patientId: number): Promise<(Patient & Document) | null> {
     try {
-      return await PatientModel.findById(patientId);
+      return await PatientModel.findOne({ patientId: patientId });
     } catch (error) {
       console.error('Error finding patient by ID:', error);
       throw error;

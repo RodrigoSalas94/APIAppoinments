@@ -2,14 +2,9 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { mongoUrl } from '../../connections/database';
 import { Appointment } from '../types/appoinmets';
 mongoose.connect(mongoUrl);
-
 const appointmentSchema: Schema = new Schema({
-  patientId: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
-  specialistId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Specialist',
-    required: true,
-  },
+  patientId: { type: Schema.Types.ObjectId, required: true },
+  specialistId: { type: String, ref: 'Specialist', required: true },
   date: { type: Date, required: true },
   status: {
     type: String,
@@ -18,6 +13,6 @@ const appointmentSchema: Schema = new Schema({
   },
 });
 
-const AppointmentModel = mongoose.model<Appointment>('Appointment', appointmentSchema);
+const AppointmentModel = mongoose.model<Appointment & Document>('Appointment', appointmentSchema);
 
 export default AppointmentModel;

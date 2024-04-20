@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
 public class Program
 {
     public static void Main(string[] args)
@@ -12,6 +9,6 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>(); // Utiliza Startup.cs para configurar la aplicación
+                webBuilder.UseStartup<Startup>(); 
             });
 }
