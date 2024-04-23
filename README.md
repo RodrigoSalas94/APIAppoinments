@@ -1,4 +1,5 @@
-Api de appointment
+                                                                                    Api de appointment
+
 Este proyecto consiste en una API para gestionar citas médicas. Está desarrollado mayormente en Typescript pero tiene un microservicio realizado en C#
 
 Tecnologías Utilizadas
@@ -27,7 +28,7 @@ Una vez que el servidor esté en ejecución, puedes acceder a la documentación 
 3) SpecialistServices: http://localhost:3500/swagger/index.html
 4) AppoinmentServices: http://localhost:7350/docs/
 
-
+Diagrama
 ```mermaid
 graph LR;
     subgraph Microservicios
