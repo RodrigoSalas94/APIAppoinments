@@ -28,6 +28,15 @@ Una vez que el servidor esté en ejecución, puedes acceder a la documentación 
 4) AppoinmentServices: http://localhost:7350/docs/
 
 
+```mermaid
+graph LR;
+    subgraph Microservicios
+    [AuthServices] -->[ PatientServices];
+    [SpecialistServices] -->[AppoinmentServices];
+    end
 
-Inicio --> Paso 1 --> Paso 2 --> Paso 3 --> Fin
+    Gateway -->|API| Microservicios;
+    Frontend --> Gateway;
+    Cliente --> Frontend;
+
 
