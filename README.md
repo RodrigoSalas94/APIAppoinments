@@ -29,4 +29,5 @@ Una vez que el servidor esté en ejecución, puedes acceder a la documentación 
 
 
 
-![Diagrama de API de Appointments](Diagrama.drawio.png)
+Inicio --> Paso 1 --> Paso 2 --> Paso 3 --> Fin
+
