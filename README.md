@@ -28,7 +28,7 @@ Una vez que el servidor esté en ejecución, puedes acceder a la documentación 
 4) AppoinmentServices: http://localhost:7350/docs/
 
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
 ```mermaid
 graph TD;
     A-->B;
