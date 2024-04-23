@@ -31,11 +31,11 @@ Una vez que el servidor esté en ejecución, puedes acceder a la documentación 
 ```mermaid
 graph LR;
     subgraph Microservicios
-    [AuthServices] --> [PatientServices];
-    [SpecialistServices] --> [AppointmentServices];
+    [AuthServices] -->[PatientServices];
+    [SpecialistServices] -->[AppointmentServices];
     end
 
-    Gateway --> Microservicios;
+    Gateway -->|API| Microservicios;
     Frontend --> Gateway;
     Cliente --> Frontend;
 
