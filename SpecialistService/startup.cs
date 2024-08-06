@@ -25,7 +25,7 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Mi API",
+                Title = "Documentación de la API de Especialistas",
                 Version = "v1"
             });
 
@@ -77,7 +77,7 @@ public class Startup
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi API V1");
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Documentación de la API de Especialistas V1");
         });
 
         app.UseEndpoints(endpoints =>

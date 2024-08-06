@@ -19,7 +19,7 @@ export const authenticateToken = async (req: AuthenticationRequest, res: Respons
 
     return res.status(200).json({
       message: 'Token de autenticación verificado correctamente',
-      id: decodedToken.id, // Aquí corregimos para usar el ID del token decodificado
+      id: decodedToken.id, 
     });
   } catch (error) {
     console.error('Error en la verificación del token:', error);
